@@ -3,7 +3,7 @@
 // @include     https://voz.vn/*
 // @version      1
 // @description  Autodecodes any Base64 text on a "code box" and show it as a link.
-// @updateURL   https://gist.githubusercontent.com/g-eipi10/16f21af97443e7246b767e7fe2493823/raw/c7d47a08a90a6bab16e1ff2ec105ad270beb2cd0/vozembedcode.js
+// @updateURL   https://raw.githubusercontent.com/g-eipi10/voz_code/main/voz_embed_code.js
 // @match        none
 // @grant        none
 // ==/UserScript==
