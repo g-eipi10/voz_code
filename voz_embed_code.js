@@ -55,7 +55,7 @@ if (document.getElementsByClassName("bbCodeBlock--code")) {
     var content = items[i].children[1].children[0];
     if (content.className === "bbCodeCode") {
       if (content.innerText.startsWith("aHR0c")) {
-        link_embed = embed_link(b64_to_utf8(content.innerText));
+        link_embed = embed_link(b64_to_utf8(content.innerText.split("\n")[0]));
         items[i].parentElement.insertBefore(link_embed, items[i]);
       }
       else if (content.innerText.startsWith("http")) {
