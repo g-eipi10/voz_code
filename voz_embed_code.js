@@ -47,6 +47,23 @@ function embed_image(img_link) {
   return img_embed;
 }
 
+function embed_general(contents, item_i, embed_type) {
+  var urls = contents.split("\n");
+  var element_embed = "";
+  for (var j = 0; j < urls.length; j++) {
+    if (embed_type === "link") { element_embed = embed_link(urls[j]); }
+    else if (embed_type === "image") { element_embed = embed_image(urls[j]); }
+    else if (embed_type === "imgur") {
+      imgur_id = urls[j].split(".com/")[1];
+      img_link = "https://i.imgur.com/" + imgur_id + ".gif";
+      element_embed = embed_image(img_link);
+    }
+    item_i.parentElement.insertBefore(element_embed, item_i);
+    var br = document.createElement("br");
+    item_i.parentElement.insertBefore(br, item_i);
+  }
+}
+
 var extensions = [".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg", ".avif"];
 
 if (document.getElementsByClassName("bbCodeBlock--code")) {
@@ -55,23 +72,36 @@ if (document.getElementsByClassName("bbCodeBlock--code")) {
     var content = items[i].children[1].children[0];
     if (content.className === "bbCodeCode") {
       if (content.innerText.startsWith("aHR0c")) {
-        link_embed = embed_link(b64_to_utf8(content.innerText.split("\n")[0]));
-        items[i].parentElement.insertBefore(link_embed, items[i]);
+        decoded = b64_to_utf8(content.innerText.split("\n")[0]);
+        embed_general(decoded, items[i], "link");
+        // urls = decoded.split("\n");
+        // for (var j = 0; j < urls.length; j++) {
+        //   link_embed = embed_link(urls[j]);
+        //   items[i].parentElement.insertBefore(link_embed, items[i]);
+        //   br = document.createElement("br");
+        //   items[i].parentElement.insertBefore(br, items[i]);
+        // }
       }
       else if (content.innerText.startsWith("http")) {
-        if (endsWith2(extensions, content.innerText)) {     
-          img_embed = embed_image(content.innerText);
-          items[i].parentElement.insertBefore(img_embed, items[i]);
+        if (endsWith2(extensions, content.innerText)) {
+          embed_general(content.innerText, items[i], "image");
+          // urls = content.innerText.split("\n");
+          // for (var j = 0; j < urls.length; j++) {
+          //   img_embed = embed_image();
+          //   items[i].parentElement.insertBefore(img_embed, items[i]);
+          // }
         }
         else if (content.innerText.startsWith("https://imgur.com") && !content.innerText.startsWith("https://imgur.com/a/")) {
-          imgur_id = content.innerText.split(".com/")[1];
-          img_link = "https://i.imgur.com/" + imgur_id + ".gif";
-          img_embed = embed_image(img_link);
-          items[i].parentElement.insertBefore(img_embed, items[i]);
+          embed_general(content.innerText, items[i], "imgur");
+          // imgur_id = content.innerText.split(".com/")[1];
+          // img_link = "https://i.imgur.com/" + imgur_id + ".gif";
+          // img_embed = embed_image(img_link);
+          // items[i].parentElement.insertBefore(img_embed, items[i]);
         }
         else {
-          link_embed = embed_link(content.innerText);
-          items[i].parentElement.insertBefore(link_embed, items[i]);
+          embed_general(content.innerText, items[i], "link");
+          // link_embed = embed_link(content.innerText);
+          // items[i].parentElement.insertBefore(link_embed, items[i]);
         }
       }
     }
