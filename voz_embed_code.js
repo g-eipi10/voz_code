@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        vozembedcode
-// @include     https://voz.vn/t/tong-hop-thao-luan-ve-download-video-nhac*
+// @include     https://voz.vn/*
 // @version      1
 // @description  Autodecodes any Base64 text on a "code box" and show it as a link.
 // @updateURL   https://raw.githubusercontent.com/g-eipi10/voz_code/main/voz_embed_code.js
