@@ -72,7 +72,7 @@ if (document.getElementsByClassName("bbCodeBlock--code")) {
     var content = items[i].children[1].children[0];
     if (content.className === "bbCodeCode") {
       if (content.innerText.startsWith("aHR0c")) {
-        decoded = b64_to_utf8(content.innerText.split("\n")[0]);
+        decoded = atob(content.innerText.split("\n")[0]);
         embed_general(decoded, items[i], "link");
         // urls = decoded.split("\n");
         // for (var j = 0; j < urls.length; j++) {
